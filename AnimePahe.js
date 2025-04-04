@@ -18,7 +18,7 @@ class DdosGuardInterceptor {
 
       // Check if we already have the __ddg2_ cookie
       if (this.cookieStore["__ddg2_"]) {
-          console.log("Retrying request with existing DDoS-Guard cookie...");
+          log("Retrying request with existing DDoS-Guard cookie...");
           return this.fetchWithCookies(url, options);
       }
 
@@ -29,15 +29,15 @@ class DdosGuardInterceptor {
           return response;
       }
 
-      console.log("New DDoS-Guard cookie acquired, retrying request...");
+      log("New DDoS-Guard cookie acquired, retrying request...");
       return this.fetchWithCookies(url, options);
   }
 
   async fetchWithCookies(url, options) {
       const cookieHeader = this.getCookieHeader();
       const headers = { ...options.headers, Cookie: cookieHeader };
-      console.log("fetchWithCookies")
-      console.log(options)
+      log("fetchWithCookies")
+      log(options)
       const response = await fetchv3(url,  headers );
 
       // Store any new cookies received
@@ -121,7 +121,7 @@ async function searchResults(keyword) {
       const formatted_response = data['data'].map((x)=>{return {title:x['title'],image:x['poster'],href:`${x['session']}`}})
       return JSON.stringify(formatted_response);
   } catch (error) {
-      console.log('Fetch error:', error);
+      log('Fetch error:', error);
       return JSON.stringify([{ title: 'Error', image: '', href: '' }]);
   }
 }
@@ -150,7 +150,7 @@ async function extractDetails(url) {
       return JSON.stringify([details]);
 
   } catch (error) {
-      console.log('Details error:', error);
+      log('Details error:', error);
       return JSON.stringify([{
           description: 'Error loading description',
           aliases: 'Duration: Unknown',
@@ -177,7 +177,7 @@ async function extractEpisodes(url) {
 
       return JSON.stringify(episodes);
   } catch (error) {
-      console.log('Fetch error:', error);
+      log('Fetch error:', error);
       return JSON.stringify([]);
   }
 }
@@ -195,7 +195,7 @@ async function extractStreamUrl(url) {
       // Or if you're lucky and the site has an API return JSON use that instead
 
       const paheWinLink = await getPaheWinLink(url);
-      console.log(paheWinLink)
+      log(paheWinLink)
       const redirectUrl = await getRedirectUrl(paheWinLink+"/i");
     
       const streamUrl = await fetchDownloadLink(redirectUrl)
@@ -206,7 +206,7 @@ async function extractStreamUrl(url) {
       return streamUrl;
 
   } catch (error) {
-      console.log('Fetch error:', error);
+      log('Fetch error:', error);
       return null;
   }
 }
@@ -494,7 +494,7 @@ async function fetchDownloadLink(downloadPageLink) {
   const location = contentResponse.headers["location"];
   if (!location) throw new Error("No Location Header Found");
 
-  console.log("Final Redirect Location:", location);
+  log("Final Redirect Location:", location);
   return location;
 }
 // get PaheWinLink
@@ -506,7 +506,7 @@ async function getPaheWinLink(url) {
   const text = await r.text()
   const match = text.match(regex)
   // check regexMatch output
-  //console.log(match[1])
+  //log(match[1])
   return match[1]
 }
 // iteratively extract episodes
@@ -566,7 +566,7 @@ searchResults('Hajime no Ippo: New Challenger').then(
   const jsonObj = JSON.parse(x)
   extractEpisodes(jsonObj[0]['href']).then((x)=>
       {
-          extractStreamUrl(JSON.parse(x)[0]['href']).then(console.log)
+          extractStreamUrl(JSON.parse(x)[0]['href']).then(log)
       })
   }
 )
