@@ -117,7 +117,7 @@ async function searchResults(keyword) {
 
       const response = await fetchv3(`${ SEARCH_URL }/?m=search&q=${ encodeURIComponent(keyword) }`);
       //const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
-      const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
+      const data = await JSON.parse(response); // API response (Pick only one, both will give an error)
       const formatted_response = data['data'].map((x)=>{return {title:x['title'],image:x['poster'],href:`${x['session']}`}})
       return JSON.stringify(formatted_response);
   } catch (error) {
