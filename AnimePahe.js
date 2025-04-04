@@ -114,14 +114,15 @@ async function searchResults(keyword) {
       // TEMPLATE TODO
       // Either find the page url for the search page, fetch it, match it with regex and return the results
       // Or if you're lucky and the site has a search API return JSON use that instead
-
+  console.error('beforeFetch');
       const response = await fetchv3(`${ SEARCH_URL }/?m=search&q=${ encodeURIComponent(keyword) }`);
+        console.error('afterFetch');
       //const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
       const data = await JSON.parse(response); // API response (Pick only one, both will give an error)
       const formatted_response = data['data'].map((x)=>{return {title:x['title'],image:x['poster'],href:`${x['session']}`}})
       return JSON.stringify(formatted_response);
   } catch (error) {
-      console.error('Search Fetch error:', error);
+      console.error(error);
       return JSON.stringify([{ title: 'Error', image: '', href: '' }]);
   }
 }
