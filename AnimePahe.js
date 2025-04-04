@@ -123,7 +123,7 @@ async function searchResults(keyword) {
     console.error(typeof response)
         console.error("BEFORE PARSE")
       const data = await JSON.parse(response); // API response (Pick only one, both will give an error)
-    const body = data['body'];
+    const body = await JSON.parse(data['body']);
     console.error("AFTER PARSE")
     console.error(data)
       const formatted_response = body['data'].map((x)=>{return {title:x['title'],image:x['poster'],href:`${x['session']}`}})
