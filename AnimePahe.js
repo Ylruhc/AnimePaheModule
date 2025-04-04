@@ -35,13 +35,13 @@ class DdosGuardInterceptor {
 
     async fetchWithCookies(url, options) {
         const cookieHeader = this.getCookieHeader();
-        const headers = { ...options.headers, Cookie: cookieHeader };
+        const headers = { ...options['headers'], Cookie: cookieHeader };
         console.log("fetchWithCookies")
         console.log(options)
         const response = await fetchv3(url,  headers );
 
         // Store any new cookies received
-        const setCookieHeader = response.headers.get("set-cookie");
+        const setCookieHeader = response['headers'].get("set-cookie");
         if (setCookieHeader) {
             this.storeCookies(setCookieHeader);
         }
@@ -50,7 +50,7 @@ class DdosGuardInterceptor {
     }
 
     isDdosGuard(response) {
-        const serverHeader = response.headers.get("server");
+        const serverHeader = response['headers'].get("server");
         return serverHeader && this.serverCheck.includes(serverHeader.toLowerCase());
     }
 
@@ -79,7 +79,7 @@ class DdosGuardInterceptor {
 
             // Make a request to the challenge URL
             const checkResponse = await this.fetchWithCookies(checkUrl.toString(), {});
-            const setCookieHeader = checkResponse.headers.get("set-cookie");
+            const setCookieHeader = checkResponse['headers'].get("set-cookie");
 
             if (!setCookieHeader) return null;
 
@@ -118,7 +118,7 @@ async function searchResults(keyword) {
         const response = await fetchv3(`${ SEARCH_URL }/?m=search&q=${ encodeURIComponent(keyword) }`);
         //const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
         const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
-        const formatted_response = data['data'].map((x)=>{return {title:x['title'],image:x['poster'],href:`${x['session']}`}})
+        const formatted_response = data['data']['data].map((x)=>{return {title:x['title'],image:x['poster'],href:`${x['session']}`}})
         return JSON.stringify(formatted_response);
     } catch (error) {
         console.log('Fetch error:', error);
@@ -436,7 +436,7 @@ async function getRedirectUrl(url) {
     );
 
     if (response.status >= 300 && response.status < 400) {
-        const newUrl = response.headers.get('location')
+        const newUrl = response['headers'].get('location')
         const index = newUrl.lastIndexOf("https://");
         const result = newUrl.slice(index + "https://".length);
         return result; // Extract redirect URL
@@ -483,7 +483,7 @@ async function fetchDownloadLink(downloadPageLink) {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Referer': 'https://kwik.cx/',
             'User-Agent': 'python-requests/2.31.0',
-            'Cookie': pageResponse.headers.get("set-cookie")
+            'Cookie': pageResponse['headers'].get("set-cookie")
         },
          'POST',
         `_token=${token}`,
@@ -491,7 +491,7 @@ async function fetchDownloadLink(downloadPageLink) {
     );
 
     // Extract final redirect location
-    const location = contentResponse.headers.get("location");
+    const location = contentResponse['headers'].get("location");
     if (!location) throw new Error("No Location Header Found");
 
     console.log("Final Redirect Location:", location);
