@@ -116,6 +116,8 @@ async function searchResults(keyword) {
       // Or if you're lucky and the site has a search API return JSON use that instead
 
       const response = await fetchv3(`${ SEARCH_URL }/?m=search&q=${ encodeURIComponent(keyword) }`);
+      console.error("FETCH IS ")
+      console.error(response)
       //const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
       const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
       console.error("JS LOGGER IS")
