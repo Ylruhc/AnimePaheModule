@@ -150,7 +150,7 @@ async function extractDetails(url) {
       const ddosInterceptor = new DdosGuardInterceptor();
       // fetch response at most 10 times to bypass ddos check 
       const response =    await ddosInterceptor.fetchWithBypass(DETAILS_URL);
-      const html = await response.text()
+      const html = await response['body']
       const description = extract_text_from_html(html,pattern)
       // Website response (Pick only one, both will give an error)
       // const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
@@ -529,7 +529,7 @@ async function extract_episodets_iter(url)
   while (!end_loop)
       {
           const r =    await ddosInterceptor.fetchWithBypass(EXTRACT_URL);
-          data = await r.json()
+          data = await JSON.parse(r['body'])
           if('data' in data)
               {
                   for (let i = 0; i < data['data'].length; i++) {
