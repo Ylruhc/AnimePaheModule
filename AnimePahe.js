@@ -121,7 +121,7 @@ async function searchResults(keyword) {
       const formatted_response = data['data'].map((x)=>{return {title:x['title'],image:x['poster'],href:`${x['session']}`}})
       return JSON.stringify(formatted_response);
   } catch (error) {
-      console.error('Fetch error:', error);
+      console.error('Search Fetch error:', error);
       return JSON.stringify([{ title: 'Error', image: '', href: '' }]);
   }
 }
