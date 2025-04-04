@@ -120,7 +120,7 @@ async function searchResults(keyword) {
       //const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
     console.error(response)
     console.error("BODY IS")
-    console.error(response['body'])
+    console.error(typeof response)
         console.error("BEFORE PARSE")
       const data = response; // API response (Pick only one, both will give an error)
     const body = await JSON.parse(data['body']);
