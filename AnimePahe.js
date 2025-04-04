@@ -119,7 +119,7 @@ async function searchResults(keyword) {
         console.error('afterFetch');
       //const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
     console.error(response)
-      const data = await JSON.parse(response); // API response (Pick only one, both will give an error)
+      const data = await JSON.parse(response.body); // API response (Pick only one, both will give an error)
       const formatted_response = data['data'].map((x)=>{return {title:x['title'],image:x['poster'],href:`${x['session']}`}})
       return JSON.stringify(formatted_response);
   } catch (error) {
