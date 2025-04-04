@@ -563,12 +563,4 @@ function extract_text_from_html(html_content,pattern)
 /** 
 * Tests
 **/
-searchResults('Hajime no Ippo: New Challenger').then(
-  (x)=>{
-  const jsonObj = JSON.parse(x)
-  extractEpisodes(jsonObj[0]['href']).then((x)=>
-      {
-          extractStreamUrl(JSON.parse(x)[0]['href']).then(console.error)
-      })
-  }
-)
+
