@@ -15,7 +15,7 @@ class DdosGuardInterceptor {
           return response;
       }
 
-      console.warn("DDoS-Guard detected, attempting to bypass...");
+      console.error("DDoS-Guard detected, attempting to bypass...");
 
       // Check if we already have the __ddg2_ cookie
       if (this.cookieStore["__ddg2_"]) {
@@ -26,7 +26,7 @@ class DdosGuardInterceptor {
       // Get a new DDoS-Guard cookie
       const newCookie = await this.getNewCookie(url);
       if (!newCookie) {
-          console.warn("Failed to retrieve DDoS-Guard cookie.");
+          console.error("Failed to retrieve DDoS-Guard cookie.");
           return response;
       }
 
