@@ -90,7 +90,8 @@ class DdosGuardInterceptor {
           this.storeCookies(setCookieHeader);
           return this.cookieStore["__ddg2_"];
       } catch (error) {
-          console.error("Error fetching DDoS-Guard cookies:", error);
+          console.error("Error fetching DDoS-Guard cookies:");
+        console.error(error.message)
           return null;
       }
   }
