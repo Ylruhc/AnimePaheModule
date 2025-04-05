@@ -31,6 +31,7 @@ class DdosGuardInterceptor {
       }
 
       console.error("New DDoS-Guard cookie acquired, retrying request...");
+    
       return this.fetchWithCookies(url, options);
   }
 
@@ -46,7 +47,8 @@ class DdosGuardInterceptor {
       if (setCookieHeader) {
           this.storeCookies(setCookieHeader);
       }
-
+      console.error("COOKIES ARE")
+      console.error(this.cookieStore)
       return response;
   }
 
