@@ -81,7 +81,8 @@ class DdosGuardInterceptor {
 
           const checkUrl = new URL(targetUrl);
           checkUrl.pathname = wellKnownPath;
-
+          console.error("url stuff is")
+          console.error(checkUrl.pathname)
           // Make a request to the challenge URL
           const checkResponse = await this.fetchWithCookies(checkUrl.toString(), {});
           const setCookieHeader = checkResponse.headers["Set-Cookie"];
