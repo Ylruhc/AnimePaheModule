@@ -53,7 +53,7 @@ class DdosGuardInterceptor {
   }
 
   isDdosGuard(response) {
-      const serverHeader = response.headers["server"];
+      const serverHeader = response.headers["Server"];
       return serverHeader && this.serverCheck.includes(serverHeader.toLowerCase());
   }
 
