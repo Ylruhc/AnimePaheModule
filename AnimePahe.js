@@ -212,7 +212,8 @@ async function extractStreamUrl(url) {
       // Fetch the provided url, match it with regex and return the stream URL
       // Or get the iframe through regex, fetch the iframe, match it with regex and return the stream URL
       // Or if you're lucky and the site has an API return JSON use that instead
-
+      console.error("WEB EPISODE URL IS")
+      console.error(url)
       const paheWinLink = await getPaheWinLink(url);
       console.error(paheWinLink)
       const redirectUrl = await getRedirectUrl(paheWinLink+"/i");
