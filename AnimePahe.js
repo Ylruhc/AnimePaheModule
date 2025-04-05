@@ -39,7 +39,7 @@ class DdosGuardInterceptor {
       const cookieHeader = this.getCookieHeader();
       const headers = { ...options.headers, Cookie: cookieHeader };
       console.error("fetchWithCookies")
-      console.error(options)
+      console.error(headers)
       const response = await fetchv3(url,  headers );
 
       // Store any new cookies received
