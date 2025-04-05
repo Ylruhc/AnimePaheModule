@@ -41,7 +41,7 @@ class DdosGuardInterceptor {
       const response = await fetchv3(url,  headers );
 
       // Store any new cookies received
-      const setCookieHeader = response.headers["set-cookie"];
+      const setCookieHeader = response.headers["Set-Cookie"];
       if (setCookieHeader) {
           this.storeCookies(setCookieHeader);
       }
@@ -79,7 +79,7 @@ class DdosGuardInterceptor {
 
           // Make a request to the challenge URL
           const checkResponse = await this.fetchWithCookies(checkUrl.toString(), {});
-          const setCookieHeader = checkResponse.headers["set-cookie"];
+          const setCookieHeader = checkResponse.headers["Set-cookie"];
 
           if (!setCookieHeader) return null;
 
@@ -491,7 +491,7 @@ async function fetchDownloadLink(downloadPageLink) {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Referer': 'https://kwik.cx/',
           'User-Agent': 'python-requests/2.31.0',
-          'Cookie': pageResponse.headers["set-cookie"]
+          'Cookie': pageResponse.headers["Set-Cookie"]
       },
        'POST',
       `_token=${token}`,
