@@ -78,13 +78,13 @@ class DdosGuardInterceptor {
          console.error("TEXT ARE")
         console.error(wellKnownText)
           const wellKnownPath = wellKnownText.split("'")[1];
-
-          const checkUrl = new URL(targetUrl);
-          checkUrl.pathname = wellKnownPath;
-          console.error("url stuff is")
-          console.error(checkUrl.pathname)
+            const regex = /^(https?:\/\/[^\/]+)(\/[^?#]*)?(\?[^#]*)?(#.*)?$/;
+            var newUrl = targetUrl.replace(regex, (match, baseUrl, pathname, query, fragment) => {
+                // If pathname exists, replace it; otherwise, just append the newPath
+                return `${baseUrl}${wellKnownPath}${query || ''}${fragment || ''}`;
+            });
           // Make a request to the challenge URL
-          const checkResponse = await this.fetchWithCookies(checkUrl.toString(), {});
+          const checkResponse = await this.fetchWithCookies(newUrl, {});
           const setCookieHeader = checkResponse.headers["Set-Cookie"];
 
           if (!setCookieHeader) return null;
