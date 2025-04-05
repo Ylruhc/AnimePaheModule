@@ -215,18 +215,22 @@ async function extractStreamUrl(url) {
       console.error("WEB EPISODE URL IS")
       console.error(url)
       const paheWinLink = await getPaheWinLink(url);
+      console.error("PAHE URL IS")
       console.error(paheWinLink)
       const redirectUrl = await getRedirectUrl(paheWinLink+"/i");
-    
+      console.error("REDIRECT URL IS")
+      console.error(redirectUrl)
       const streamUrl = await fetchDownloadLink(redirectUrl)
       // const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
       // const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
-      
+      console.error("STREAM URL IS")
+      console.error(streamURL)
 
       return streamUrl;
 
   } catch (error) {
-      console.error('Fetch error:', error);
+      console.error('Fetch error:');
+      console.error(error)
       return null;
   }
 }
