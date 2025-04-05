@@ -8,7 +8,8 @@ class DdosGuardInterceptor {
 
   async fetchWithBypass(url, options = {}) {
       let response = await this.fetchWithCookies(url, options);
-
+      console.error("Headers are is")
+      console.error(response.headers)
       // If request is successful or not blocked, return response
       if (!this.errorCodes.includes(response.status) || !this.isDdosGuard(response)) {
           return response;
@@ -125,6 +126,8 @@ async function searchResults(keyword) {
       const data =  response; // API response (Pick only one, both will give an error)
     const body = await JSON.parse(data['body']);
     console.error("AFTER PARSE")
+        console.error("Headers are is")
+      console.error(response.headers)
     console.error(data)
       const formatted_response = body['data'].map((x)=>{return {title:x['title'],image:x['poster'],href:`${x['session']}`}})
       return JSON.stringify(formatted_response);
@@ -150,6 +153,8 @@ async function extractDetails(url) {
       const ddosInterceptor = new DdosGuardInterceptor();
       // fetch response at most 10 times to bypass ddos check 
       const response =    await ddosInterceptor.fetchWithBypass(DETAILS_URL);
+      console.error("Headers are is")
+      console.error(response.headers)
       const html = await response['body']
       const description = extract_text_from_html(html,pattern)
       // Website response (Pick only one, both will give an error)
