@@ -75,6 +75,8 @@ class DdosGuardInterceptor {
           // Fetch the challenge path from DDoS-Guard
           const wellKnownResponse = await fetchv3("https://check.ddos-guard.net/check.js");
           const wellKnownText = await wellKnownResponse.text();
+         console.error("TEXT ARE")
+        console.error(wellKnownText)
           const wellKnownPath = wellKnownText.split("'")[1];
 
           const checkUrl = new URL(targetUrl);
