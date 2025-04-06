@@ -516,10 +516,11 @@ console.error("Problem 7")
           'Content-Type': 'application/x-www-form-urlencoded',
           'Referer': 'https://kwik.cx/',
           
-          'Cookie': pageResponse.headers["Set-Cookie"].replace("path=/;", "")
+          'Cookie': pageResponse.headers["Set-Cookie"].replace("path=/;", ""),
+          'X-CSRF-TOKEN': `${token}`
       },
        'POST',
-      `_token=${token}`,
+      `ss`,
        false // Prevent auto-redirect
   );
 console.error("Problem 8")
