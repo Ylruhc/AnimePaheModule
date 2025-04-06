@@ -523,11 +523,6 @@ console.error("Problem 8")
   const location = contentResponse.headers["Location"];
   console.error("Final Redirect Location:");
   console.error(location)
-  if (!location)
-  {
-    return ""
-  };
-console.error("Problem 9")
   return location;
 }
 // get PaheWinLink
