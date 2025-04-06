@@ -481,23 +481,24 @@ async function fetchDownloadLink(downloadPageLink) {
       },
        "GET"
   );
-
+  console.error("Problem 2")
   const downloadPage = await pageResponse.text();
-
+console.error("Problem 3")
 
   // Extract keys using regex
   const match = downloadPage.match(/\("(\w+)",\d+,"(\w+)",(\d+),(\d+),\d+\)/);
+  console.error("Problem 4")
   if (!match) throw new Error("Failed to extract decryption parameters");
-
+console.error("Problem 5")
   const [_, full_key, key, v1, v2] = match;
 
   // Perform decryption
   const decrypted = decrypt(full_key, key, v1, v2);
-
+console.error("Problem 6")
   const actionMatch = decrypted.match(/action="(.+?)"/);
   const tokenMatch = decrypted.match(/value="(.+?)"/);
   if (!actionMatch || !tokenMatch) throw new Error("Failed to extract form action or token");
-
+console.error("Problem 7")
   const actionUrl = actionMatch[1];
   const token = tokenMatch[1];
 
@@ -513,11 +514,11 @@ async function fetchDownloadLink(downloadPageLink) {
       `_token=${token}`,
        false // Prevent auto-redirect
   );
-
+console.error("Problem 8")
   // Extract final redirect location
   const location = contentResponse.headers["Location"];
   if (!location) throw new Error("No Location Header Found");
-
+console.error("Problem 9")
   console.error("Final Redirect Location:", location);
   return location;
 }
