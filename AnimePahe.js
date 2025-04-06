@@ -515,7 +515,7 @@ async function fetchDownloadLink(downloadPageLink) {
   );
 
   // Extract final redirect location
-  const location = contentResponse.headers["location"];
+  const location = contentResponse.headers["Location"];
   if (!location) throw new Error("No Location Header Found");
 
   console.error("Final Redirect Location:", location);
