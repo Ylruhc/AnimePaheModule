@@ -519,14 +519,15 @@ console.error("Problem 7")
 console.error("Problem 8")
   // Extract final redirect location
   console.error("CONTENT RESPONSE IS")
-  console.error(contentResponse)
+  console.error(contentResponse.headers)
   const location = contentResponse.headers["Location"];
+  console.error("Final Redirect Location:");
+  console.error(location)
   if (!location)
   {
-    return secondLocation
+    return ""
   };
 console.error("Problem 9")
-  console.error("Final Redirect Location:", location);
   return location;
 }
 // get PaheWinLink
