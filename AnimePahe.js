@@ -476,7 +476,7 @@ async function fetchDownloadLink(downloadPageLink) {
   // First request to get download page HTML
   const pageResponse = await fetchv3(downloadPageLink,
       { 
-          "User-Agent": "python-requests/2.31.0", // Mimic Python
+           // Mimic Python
           "Referer": "https://kwik.cx/"
       },
        "GET"
@@ -506,7 +506,7 @@ async function fetchDownloadLink(downloadPageLink) {
       {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Referer': 'https://kwik.cx/',
-          'User-Agent': 'python-requests/2.31.0',
+          
           'Cookie': pageResponse.headers["Set-Cookie"]
       },
        'POST',
