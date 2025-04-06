@@ -512,7 +512,7 @@ console.error("Problem 7")
       },
        'POST',
       `_token=${token}`,
-       false // Prevent auto-redirect
+       true // Prevent auto-redirect
   );
 var secondContentResponse =  await fetchv3(actionUrl,
       {
@@ -523,7 +523,7 @@ var secondContentResponse =  await fetchv3(actionUrl,
       },
        'POST',
       `_token=${token}`,
-       false // Prevent auto-redirect
+       true // Prevent auto-redirect
   );
 console.error("Problem 8")
   // Extract final redirect location
