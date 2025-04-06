@@ -518,7 +518,8 @@ console.error("Problem 7")
   );
 console.error("Problem 8")
   // Extract final redirect location
-  console.error(contentResponse.headers)
+  console.error("CONTENT RESPONSE IS")
+  console.error(contentResponse)
   const location = contentResponse.headers["Location"];
   if (!location)
   {
