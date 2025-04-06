@@ -220,21 +220,14 @@ async function extractStreamUrl(url) {
       const redirectUrl = await getRedirectUrl(paheWinLink+"/i");
       console.error("REDIRECT URL IS")
       console.error(redirectUrl)
-    try
-    {
-            const streamUrl = await fetchDownloadLink(redirectUrl)
+      const streamUrl = await fetchDownloadLink(redirectUrl)
       // const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
       // const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
       console.error("STREAM URL IS")
       console.error(streamURL)
 
       return streamUrl;
-    }
-    catch(error)
-    {
-        const streamUrl = await fetchDownloadLink(redirectUrl)
-      return streamUrl
-    }
+    
 
   } catch (error) {
       console.error('Fetch error:');
@@ -525,6 +518,7 @@ console.error("Problem 7")
   );
 console.error("Problem 8")
   // Extract final redirect location
+  console.error(contentResponse.headers)
   const location = contentResponse.headers["Location"];
   if (!location)
   {
