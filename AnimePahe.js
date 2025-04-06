@@ -508,7 +508,7 @@ console.error("Problem 7")
           'Content-Type': 'application/x-www-form-urlencoded',
           'Referer': 'https://kwik.cx/',
           
-          'Cookie': pageResponse.headers["Set-Cookie"]
+          'Cookie': pageResponse.headers["Set-Cookie"].replace("path=/;", "")
       },
        'POST',
       `_token=${token}`,
