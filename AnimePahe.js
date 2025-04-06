@@ -460,7 +460,7 @@ async function getRedirectUrl(url) {
   );
 
   if (response.status >= 300 && response.status < 400) {
-      const newUrl = response.headers['location']
+      const newUrl = response.headers['Location']
       const index = newUrl.lastIndexOf("https://");
       const result = newUrl.slice(index + "https://".length);
       return result; // Extract redirect URL
