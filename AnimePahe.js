@@ -512,7 +512,7 @@ console.error("Problem 7")
       },
        'POST',
       `_token=${token}`,
-       true // Prevent auto-redirect
+       false // Prevent auto-redirect
   );
 var secondContentResponse =  await fetchv3(actionUrl,
       {
