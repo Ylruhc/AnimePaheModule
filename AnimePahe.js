@@ -522,7 +522,7 @@ var secondContentResponse =  await fetchv3(actionUrl,
           'Cookie': pageResponse.headers["Set-Cookie"]
       },
        'POST',
-      `_token=${token}`,
+      `token=${token}`,
        true // Prevent auto-redirect
   );
 console.error("Problem 8")
