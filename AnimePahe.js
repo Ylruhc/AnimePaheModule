@@ -514,10 +514,25 @@ console.error("Problem 7")
       `_token=${token}`,
        false // Prevent auto-redirect
   );
+var secondContentResponse =  await fetchv3(actionUrl,
+      {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Referer': 'https://kwik.cx/',
+          
+          'Cookie': pageResponse.headers["Set-Cookie"]
+      },
+       'POST',
+      `_token=${token}`,
+       false // Prevent auto-redirect
+  );
 console.error("Problem 8")
   // Extract final redirect location
   const location = contentResponse.headers["Location"];
-  if (!location) throw new Error("No Location Header Found");
+  const secondLocation = secondContentResponse.headers["Location"];
+  if (!location)
+  {
+    return secondLocation
+  };
 console.error("Problem 9")
   console.error("Final Redirect Location:", location);
   return location;
