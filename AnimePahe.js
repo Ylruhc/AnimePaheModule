@@ -225,8 +225,9 @@ async function extractStreamUrl(url) {
       // const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
       console.error("STREAM URL IS")
       console.error(streamUrl)
-
-      return streamUrl;
+ const hlsPaheLink = await getHLSPaheLink(url);
+    const hlsUrl = await getHLSLink(hlsPaheLink)
+      return hlsUrl;
     
 
   } catch (error) {
@@ -585,7 +586,47 @@ function extract_text_from_html(html_content,pattern)
   formatted_text = formatted_text.replace(/\s+/g, " ")
   return formatted_text
 }
+//HLS FUNC
+async function getHLSPaheLink(url)
+{
+    parentDivRegex = /<div[^>]*id="resolutionMenu"[^>]*>([\s\S]*?)<\/div>/
+    childRegex = /data-src="([^"]+)"/
+    const ddosInterceptor = new DdosGuardInterceptor();
+    const r = await ddosInterceptor.fetchWithBypass(url);
+    const text = await r.text()
+    const parentMatch = text.match(parentDivRegex)[1]
+    const childMatch = parentMatch.match(childRegex);
+    return childMatch[1]
+}
 
+async function getHLSLink(videoUrl)
+{
+    try {
+        const response = await fetchv3(videoUrl, {
+            headers: { Referer: "https://animepahe.ru/" }
+        });
+
+        const data = await response.text();
+
+        const match = /(eval)(\(f.*?)(\n<\/script>)/s.exec(data);
+        if (!match || match.length < 3) {
+            console.error("No matching eval script found.");
+            return null;
+        }
+
+        const source = eval(match[2].replace('eval', '')).match(/https.*?m3u8/);
+        if (!source) {
+            console.error("No M3U8 URL found.");
+            return null;
+        }
+
+        return source[0];
+        
+    } catch (error) {
+        console.error("Error fetching video:", error);
+        return null;
+    }
+}
 /** 
 * Tests
 **/
