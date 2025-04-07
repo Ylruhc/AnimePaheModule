@@ -608,14 +608,15 @@ async function getHLSLink(videoUrl)
         const response = await fetchv3(videoUrl, {
             headers: { 'Referer': "https://animepahe.ru/" }
         });
-
+        console.error("HLS LINE 1")
         const data = await response.text();
-
+   console.error("HLS LINE 2")
         const match = /(eval)(\(f.*?)(\n<\/script>)/s.exec(data);
         if (!match || match.length < 3) {
             console.error("No matching eval script found.");
             return null;
         }
+         console.error("HLS LINE 3")
         console.error("Problem 1")
         const source = eval(match[2].replace('eval', '')).match(/https.*?m3u8/);
         console.error("Problem 2")
