@@ -226,6 +226,8 @@ async function extractStreamUrl(url) {
       //console.error("STREAM URL IS")
       //console.error(streamUrl)
  const hlsPaheLink = await getHLSPaheLink(url);
+    console.error("HLS PAHE LINK IS")
+     console.error(hlsPaheLink)
     const hlsUrl = await getHLSLink(hlsPaheLink)
       return hlsUrl;
     
@@ -593,6 +595,7 @@ async function getHLSPaheLink(url)
     childRegex = /data-src="([^"]+)"/
     const ddosInterceptor = new DdosGuardInterceptor();
     const r = await ddosInterceptor.fetchWithBypass(url);
+    console.error("PROBLEM 69")
     const text = await r.text()
     const parentMatch = text.match(parentDivRegex)[1]
     const childMatch = parentMatch.match(childRegex);
@@ -624,7 +627,7 @@ async function getHLSLink(videoUrl)
         return source[0];
         
     } catch (error) {
-        console.error("Error fetching video:", error);
+        console.error("Error fetching video:");
         return null;
     }
 }
