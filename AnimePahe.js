@@ -603,7 +603,7 @@ async function getHLSLink(videoUrl)
 {
     try {
         const response = await fetchv3(videoUrl, {
-            headers: { Referer: "https://animepahe.ru/" }
+            headers: { 'Referer': "https://animepahe.ru/" }
         });
 
         const data = await response.text();
