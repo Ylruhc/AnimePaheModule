@@ -212,19 +212,19 @@ async function extractStreamUrl(url) {
       // Fetch the provided url, match it with regex and return the stream URL
       // Or get the iframe through regex, fetch the iframe, match it with regex and return the stream URL
       // Or if you're lucky and the site has an API return JSON use that instead
-      console.error("WEB EPISODE URL IS")
-      console.error(url)
-      const paheWinLink = await getPaheWinLink(url);
-      console.error("PAHE URL IS")
-      console.error(paheWinLink)
-      const redirectUrl = await getRedirectUrl(paheWinLink+"/i");
-      console.error("REDIRECT URL IS")
-      console.error(redirectUrl)
-      const streamUrl = await fetchDownloadLink(redirectUrl)
+     // console.error("WEB EPISODE URL IS")
+      //console.error(url)
+      //const paheWinLink = await getPaheWinLink(url);
+     // console.error("PAHE URL IS")
+      //console.error(paheWinLink)
+      //const redirectUrl = await getRedirectUrl(paheWinLink+"/i");
+     // console.error("REDIRECT URL IS")
+      //console.error(redirectUrl)
+      //const streamUrl = await fetchDownloadLink(redirectUrl)
       // const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
       // const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
-      console.error("STREAM URL IS")
-      console.error(streamUrl)
+      //console.error("STREAM URL IS")
+      //console.error(streamUrl)
  const hlsPaheLink = await getHLSPaheLink(url);
     const hlsUrl = await getHLSLink(hlsPaheLink)
       return hlsUrl;
@@ -613,8 +613,9 @@ async function getHLSLink(videoUrl)
             console.error("No matching eval script found.");
             return null;
         }
-
+        console.error("Problem 1")
         const source = eval(match[2].replace('eval', '')).match(/https.*?m3u8/);
+        console.error("Problem 2")
         if (!source) {
             console.error("No M3U8 URL found.");
             return null;
