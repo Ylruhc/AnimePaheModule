@@ -7,7 +7,7 @@
     },
     "version": "1.0.0",
     "language": "English (SUB)",
-    "streamType": "MP4",
+    "streamType": "HLS",
     "quality": "720p",
     "baseUrl": "https://www.animepahe.ru",
     "searchBaseUrl": "https://www.animepahe.ru/api?m=search&q=%s",
