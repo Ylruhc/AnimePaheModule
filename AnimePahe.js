@@ -605,9 +605,9 @@ async function getHLSPaheLink(url)
 async function getHLSLink(videoUrl)
 {
     try {
-        const response = await fetchv3(videoUrl, {
-            headers: { 'Referer': "https://animepahe.ru/" }
-        });
+        const response = await fetchv3(videoUrl, 
+            { 'Referer': "https://animepahe.ru/" }
+        );
         console.error("HLS LINE 1")
         const data = await response.text();
    console.error("HLS LINE 2")
