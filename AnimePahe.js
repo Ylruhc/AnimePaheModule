@@ -230,7 +230,7 @@ async function extractStreamUrl(url) {
      //console.error(hlsPaheLink)
     //const hlsUrl = await getHLSLink(hlsPaheLink)
       //return hlsUrl;
-    const newStreamUrl = streamUrl.replace('.mp4', '')
+    const newStreamUrl = streamUrl.replace('.mp4', '.m3u8')
     return newStreamUrl
     
 
