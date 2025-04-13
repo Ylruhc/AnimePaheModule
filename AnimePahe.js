@@ -40,7 +40,7 @@ class DdosGuardInterceptor {
       const headers = { ...options.headers, Cookie: cookieHeader };
       console.error("fetchWithCookies")
       console.error(headers)
-      const response = await fetchv3(url,  headers );
+      const response = await fetchv2(url,  headers );
 
       // Store any new cookies received
       const setCookieHeader = response.headers["Set-Cookie"];
@@ -73,7 +73,7 @@ class DdosGuardInterceptor {
   async getNewCookie(targetUrl) {
       try {
           // Fetch the challenge path from DDoS-Guard
-          const wellKnownResponse = await fetchv3("https://check.ddos-guard.net/check.js");
+          const wellKnownResponse = await fetchv2("https://check.ddos-guard.net/check.js");
           const wellKnownText = await wellKnownResponse.text();
          console.error("TEXT ARE")
         console.error(wellKnownText)
@@ -122,7 +122,7 @@ async function searchResults(keyword) {
       // Either find the page url for the search page, fetch it, match it with regex and return the results
       // Or if you're lucky and the site has a search API return JSON use that instead
   console.error('beforeFetch');
-      const response = await fetchv3(`${ SEARCH_URL }/?m=search&q=${ encodeURIComponent(keyword) }`);
+      const response = await fetchv2(`${ SEARCH_URL }/?m=search&q=${ encodeURIComponent(keyword) }`);
         console.error('afterFetch');
       //const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
     console.error(response)
@@ -189,7 +189,7 @@ async function extractEpisodes(url) {
       // TEMPLATE TODO
       // Fetch the provided url, match it with regex and return the episodes
       // Or if you're lucky and the site has an API return JSON use that instead
-      //const response = await fetchv3(url);
+      //const response = await fetchv2(url);
       //const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
       // const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
       episodes = await extract_episodets_iter(url)
@@ -456,7 +456,7 @@ function decrypt(fullString, key, v1, v2) {
 }
 // get Redirect Url from paheWinLink
 async function getRedirectUrl(url) {
-  const response = await fetchv3(url,
+  const response = await fetchv2(url,
       {
           "Referer": "https://kwik.cx/" // Add the Referer header
       },
@@ -480,7 +480,7 @@ async function fetchDownloadLink(downloadPageLink) {
   }
 
   // First request to get download page HTML
-  const pageResponse = await fetchv3(downloadPageLink,
+  const pageResponse = await fetchv2(downloadPageLink,
       { 
            // Mimic Python
           "Referer": "https://kwik.cx/"
@@ -509,7 +509,7 @@ console.error("Problem 7")
   const token = tokenMatch[1];
 
   // Second request to submit form with extracted token
-  const contentResponse = await fetchv3(actionUrl,
+  const contentResponse = await fetchv2(actionUrl,
       {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Referer': 'https://kwik.cx/',
@@ -607,7 +607,7 @@ async function getHLSPaheLink(url)
 async function getHLSLink(videoUrl)
 {
     try {
-        const response = await fetchv3(videoUrl, 
+        const response = await fetchv2(videoUrl, 
             { 'Referer': "https://animepahe.ru/" }
         );
         console.error("HLS LINE 1")
