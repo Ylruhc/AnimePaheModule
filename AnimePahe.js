@@ -229,7 +229,7 @@ async function extractStreamUrl(url) {
     //console.error("HLS PAHE LINK IS")
      //console.error(hlsPaheLink)
     const hlsUrl = await getHLSLink(hlsPaheLink)
-      return "https://pahe.gojo.wtf/"+hlsUrl;
+      return hlsUrl;
     //const newStreamUrl = streamUrl.replace('.mp4', '.m3u8')
     //return newStreamUrl
     
