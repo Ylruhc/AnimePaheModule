@@ -130,7 +130,7 @@ async function searchResults(keyword) {
     console.error(typeof response)
         console.error("BEFORE PARSE")
       const data =  response; // API response (Pick only one, both will give an error)
-    const body = await JSON.parse(data['body']);
+    const body = await JSON.parse(data['_data']);
     console.error("AFTER PARSE")
         console.error("Headers are is")
       console.error(response.headers)
@@ -161,7 +161,7 @@ async function extractDetails(url) {
       const response =    await ddosInterceptor.fetchWithBypass(DETAILS_URL);
       console.error("Headers are is")
       console.error(response.headers)
-      const html = await response['body']
+      const html = await response['_data']
       const description = extract_text_from_html(html,pattern)
       // Website response (Pick only one, both will give an error)
       // const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
@@ -554,7 +554,7 @@ async function extract_episodets_iter(url)
   while (!end_loop)
       {
           const r =    await ddosInterceptor.fetchWithBypass(EXTRACT_URL);
-          data = await JSON.parse(r['body'])
+          data = await JSON.parse(r['_data'])
           if('data' in data)
               {
                   for (let i = 0; i < data['data'].length; i++) {
