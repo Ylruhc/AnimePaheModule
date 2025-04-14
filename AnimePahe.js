@@ -8,8 +8,7 @@ class DdosGuardInterceptor {
 
   async fetchWithBypass(url, options = {}) {
       let response = await this.fetchWithCookies(url, options);
-      console.error("Headers are is")
-      console.error(response.headers)
+
       // If request is successful or not blocked, return response
       if (!this.errorCodes.includes(response.status) || !this.isDdosGuard(response)) {
           return response;
@@ -38,8 +37,7 @@ class DdosGuardInterceptor {
   async fetchWithCookies(url, options) {
       const cookieHeader = this.getCookieHeader();
       const headers = { ...options.headers, Cookie: cookieHeader };
-      console.error("fetchWithCookies")
-      console.error(headers)
+
       const response = await fetchv2(url,  headers );
 
       // Store any new cookies received
@@ -47,8 +45,7 @@ class DdosGuardInterceptor {
       if (setCookieHeader) {
           this.storeCookies(setCookieHeader);
       }
-      console.error("COOKIES ARE")
-      console.error(this.cookieStore)
+
       return response;
   }
 
@@ -75,8 +72,7 @@ class DdosGuardInterceptor {
           // Fetch the challenge path from DDoS-Guard
           const wellKnownResponse = await fetchv2("https://check.ddos-guard.net/check.js");
           const wellKnownText = await wellKnownResponse.text();
-         console.error("TEXT ARE")
-        console.error(wellKnownText)
+
           const wellKnownPath = wellKnownText.split("'")[1];
             const regex = /^(https?:\/\/[^\/]+)(\/[^?#]*)?(\?[^#]*)?(#.*)?$/;
             var newUrl = targetUrl.replace(regex, (match, baseUrl, pathname, query, fragment) => {
@@ -123,18 +119,13 @@ async function searchResults(keyword) {
       // Or if you're lucky and the site has a search API return JSON use that instead
   console.error('beforeFetch');
       const response = await fetchv2(`${ SEARCH_URL }/?m=search&q=${ encodeURIComponent(keyword) }`);
-        console.error('afterFetch');
+
       //const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
-    console.error(response)
-    console.error("BODY IS")
-    console.error(typeof response)
-        console.error("BEFORE PARSE")
+
+
       const data =  response; // API response (Pick only one, both will give an error)
     const body = await JSON.parse(data['_data']);
-    console.error("AFTER PARSE")
-        console.error("Headers are is")
-      console.error(response.headers)
-    console.error(data)
+
       const formatted_response = body['data'].map((x)=>{return {title:x['title'],image:x['poster'],href:`${x['session']}`}})
       return JSON.stringify(formatted_response);
   } catch (error) {
@@ -159,8 +150,7 @@ async function extractDetails(url) {
       const ddosInterceptor = new DdosGuardInterceptor();
       // fetch response at most 10 times to bypass ddos check 
       const response =    await ddosInterceptor.fetchWithBypass(DETAILS_URL);
-      console.error("Headers are is")
-      console.error(response.headers)
+
       const html = await response['_data']
       const description = extract_text_from_html(html,pattern)
       // Website response (Pick only one, both will give an error)
@@ -487,24 +477,24 @@ async function fetchDownloadLink(downloadPageLink) {
       },
        "GET"
   );
-  console.error("Problem 2")
+
   const downloadPage = await pageResponse.text();
-console.error("Problem 3")
+
 
   // Extract keys using regex
   const match = downloadPage.match(/\("(\w+)",\d+,"(\w+)",(\d+),(\d+),\d+\)/);
-  console.error("Problem 4")
+
   if (!match) throw new Error("Failed to extract decryption parameters");
-console.error("Problem 5")
+
   const [_, full_key, key, v1, v2] = match;
 
   // Perform decryption
   const decrypted = decrypt(full_key, key, v1, v2);
-console.error("Problem 6")
+
   const actionMatch = decrypted.match(/action="(.+?)"/);
   const tokenMatch = decrypted.match(/value="(.+?)"/);
   if (!actionMatch || !tokenMatch) throw new Error("Failed to extract form action or token");
-console.error("Problem 7")
+
   const actionUrl = actionMatch[1];
   const token = tokenMatch[1];
 
@@ -521,13 +511,9 @@ console.error("Problem 7")
       `ss`,
        false // Prevent auto-redirect
   );
-console.error("Problem 8")
-  // Extract final redirect location
-  console.error("CONTENT RESPONSE IS")
-  console.error(contentResponse.headers)
+
   const location = contentResponse.headers["Location"];
-  console.error("Final Redirect Location:");
-  console.error(location)
+
   return location;
 }
 // get PaheWinLink
@@ -597,7 +583,7 @@ async function getHLSPaheLink(url)
     childRegex = /data-src="([^"]+)"/
     const ddosInterceptor = new DdosGuardInterceptor();
     const r = await ddosInterceptor.fetchWithBypass(url);
-    console.error("PROBLEM 69")
+
     const text = await r.text()
     const parentMatch = text.match(parentDivRegex)[1]
     const childMatch = parentMatch.match(childRegex);
@@ -610,18 +596,17 @@ async function getHLSLink(videoUrl)
         const response = await fetchv2(videoUrl, 
             { 'Referer': "https://animepahe.ru/" }
         );
-        console.error("HLS LINE 1")
+  
         const data = await response.text();
-   console.error("HLS LINE 2")
+
         const match = /(eval)(\(f.*?)(\n<\/script>)/s.exec(data);
         if (!match || match.length < 3) {
             console.error("No matching eval script found.");
             return null;
         }
-         console.error("HLS LINE 3")
-        console.error("Problem 1")
+
         const source = eval(match[2].replace('eval', '')).match(/https.*?m3u8/);
-        console.error("Problem 2")
+        
         if (!source) {
             console.error("No M3U8 URL found.");
             return null;
