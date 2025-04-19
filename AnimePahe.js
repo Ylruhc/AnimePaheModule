@@ -204,23 +204,24 @@ async function extractStreamUrl(url) {
       // Or if you're lucky and the site has an API return JSON use that instead
      // console.error("WEB EPISODE URL IS")
       //console.error(url)
-      //const paheWinLink = await getPaheWinLink(url);
+      const paheWinLink = await getPaheWinLink(url);
      // console.error("PAHE URL IS")
       //console.error(paheWinLink)
-      //const redirectUrl = await getRedirectUrl(paheWinLink+"/i");
+      const redirectUrl = await getRedirectUrl(paheWinLink+"/i");
      // console.error("REDIRECT URL IS")
       //console.error(redirectUrl)
-      //const streamUrl = await fetchDownloadLink(redirectUrl)
+      const streamUrl = await fetchDownloadLink(redirectUrl)
+      return streamUrl
       // const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
       // const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
       //console.error("STREAM URL IS")
       //console.error(streamUrl)
- const hlsPaheLink = await getHLSPaheLink(url);
+ //const hlsPaheLink = await getHLSPaheLink(url);
     //console.error("HLS PAHE LINK IS")
      //console.error(hlsPaheLink)
-    const hlsUrl = await getHLSLink(hlsPaheLink)
-      return hlsUrl;
-    //const newStreamUrl = streamUrl.replace('.mp4', '.m3u8')
+    //const hlsUrl = await getHLSLink(hlsPaheLink)
+      //return hlsUrl;
+      //const newStreamUrl = streamUrl.replace('.mp4', '.m3u8')
     //return newStreamUrl
     
 
