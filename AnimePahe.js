@@ -211,7 +211,7 @@ async function extractStreamUrl(url) {
      // console.error("REDIRECT URL IS")
       //console.error(redirectUrl)
       const streamUrl = await fetchDownloadLink(redirectUrl)
-      return streamUrl
+      return {stream:{streamUrl:streamUrl,headers:{Referer:"kwik.cz",Origin:"kwik.cz"}}}
       // const html = typeof response === 'object' ? await response.text() : await response; // Website response (Pick only one, both will give an error)
       // const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
       //console.error("STREAM URL IS")
