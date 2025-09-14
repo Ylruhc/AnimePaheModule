@@ -218,8 +218,10 @@ async function extractStreamUrl(url) {
       //console.error(streamUrl)
 const hlsPaheLink = await getHLSPaheLink(url);
     //console.error("HLS PAHE LINK IS")
-     console.error(hlsPaheLink)
-    const streamUrl = await getHLSLink(hlsPaheLink)
+     //console.error(hlsPaheLink)
+    const midUrl = await getHLSLink(hlsPaheLink)
+    const streamUrl =  midUrl.replace('/stream/', '/hls/').replace('uwu.m3u8', 'owo.m3u8')
+   
           return JSON.stringify({streams:[{streamUrl:streamUrl,headers:{Referer:"kwik.cz",Origin:"kwik.cz"},title:"pahe1"},{streamUrl:streamUrl,headers:{Referer:"kwik.cz",Origin:"kwik.cz"},title:"pahe2"},{streamUrl:streamUrl,headers:{Referer:"kwik.cz",Origin:"kwik.cz"}}]})
       //return hlsUrl;
       //const newStreamUrl = streamUrl.replace('.mp4', '.m3u8')
@@ -624,6 +626,7 @@ async function getHLSLink(videoUrl)
 /** 
 * Tests
 **/
+
 
 
 
