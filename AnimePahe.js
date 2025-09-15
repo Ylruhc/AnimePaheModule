@@ -216,13 +216,23 @@ async function extractStreamUrl(url) {
       // const data = typeof response === 'object' ? await response.json() : await JSON.parse(response); // API response (Pick only one, both will give an error)
       //console.error("STREAM URL IS")
       //console.error(streamUrl)
-const hlsPaheLink = await getHLSPaheLink(url);
+const hlsPaheLinks = await getHLSPaheLink(url);
+console.log(hlsPaheLinks)
+var videosArr = [];
+
+    for (const val of hlsPaheLinks)
+        {
+                console.log("object is ")
+                console.log(val)
+                const midUrl = await getHLSLink(val["src"])
+                const streamUrl =  midUrl.replace('/stream/', '/hls/').replace('uwu.m3u8', 'owo.m3u8')
+                videosArr.push({streamUrl:streamUrl,headers:{Referer:"kwik.cz",Origin:"kwik.cz"},title:val["text"]})
+        }
     //console.error("HLS PAHE LINK IS")
      //console.error(hlsPaheLink)
-    const midUrl = await getHLSLink(hlsPaheLink)
-    const streamUrl =  midUrl.replace('/stream/', '/hls/').replace('uwu.m3u8', 'owo.m3u8')
+
    
-          return JSON.stringify({streams:[{streamUrl:streamUrl,headers:{Referer:"kwik.cz",Origin:"kwik.cz"},title:"pahe1"},{streamUrl:streamUrl,headers:{Referer:"kwik.cz",Origin:"kwik.cz"},title:"pahe2"},{streamUrl:streamUrl,headers:{Referer:"kwik.cz",Origin:"kwik.cz"}}]})
+          return JSON.stringify({streams: videosArr})
       //return hlsUrl;
       //const newStreamUrl = streamUrl.replace('.mp4', '.m3u8')
     //return newStreamUrl
@@ -406,6 +416,20 @@ function unpack(source) {
 * Util Functions
 **/
 // decrypt functions that I dont know how it works but works
+
+function decodeHtmlEntities(str) {
+  const entities = {
+    "&middot;": "·",
+    "&amp;": "&",
+    "&lt;": "<",
+    "&gt;": ">",
+    "&quot;": '"',
+    "&#39;": "'"
+  };
+
+  return str.replace(/&[a-zA-Z0-9#]+;/g, match => entities[match] || match);
+}
+
 function getString(content, s1, s2) {
   let slice2 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/".slice(0, s2);
   let acc = 0;
@@ -583,15 +607,27 @@ function extract_text_from_html(html_content,pattern)
 //HLS FUNC
 async function getHLSPaheLink(url)
 {
-    parentDivRegex = /<div[^>]*id="resolutionMenu"[^>]*>([\s\S]*?)<\/div>/
-    childRegex = /data-src="([^"]+)"/
-    const ddosInterceptor = new DdosGuardInterceptor();
-    const r = await ddosInterceptor.fetchWithBypass(url);
+// Regex to capture both data-src and button inner text
+const parentDivRegex = /<div[^>]*id="resolutionMenu"[^>]*>([\s\S]*?)<\/div>/;
+const childRegex = /<button[^>]*data-src="([^"]+)"[^>]*data-fansub="([^"]+)"[^>]*data-resolution="([^"]+)"[^>]*data-audio="([^"]*)"/g
 
-    const text = await r.text()
-    const parentMatch = text.match(parentDivRegex)[1]
-    const childMatch = parentMatch.match(childRegex);
-    return childMatch[1]
+const ddosInterceptor = new DdosGuardInterceptor();
+const r = await ddosInterceptor.fetchWithBypass(url);
+const text = await r.text();
+
+// Get the resolutionMenu block
+const parentMatch = text.match(parentDivRegex)[1];
+
+// Extract all matches of (data-src, innerText)
+const childMatch = [...parentMatch.matchAll(childRegex)];
+
+const results = childMatch.map(x => ({
+  src: x[1],
+  text: `${x[2]} - ${x[3]}p - ${x[4]}`  // inner text of button
+}));
+
+console.log(results);
+return results;
 }
 
 async function getHLSLink(videoUrl)
@@ -626,6 +662,8 @@ async function getHLSLink(videoUrl)
 /** 
 * Tests
 **/
+
+
 
 
 
